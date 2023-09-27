@@ -1,29 +1,40 @@
+import { create } from "lodash";
+import Project from "./Project";
+
 export default class UI {
     
     static loadHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
 
+        page.appendChild(UI.createTitle());
+        page.appendChild(UI.createProjects());
+
+        document.body.appendChild(page);
+    }
+
+    static createTitle() {
         const title = document.createElement('div');
         title.classList.add('title');
         title.innerHTML = "Todo List";
+        return title;
+    }
 
-        page.appendChild(title);
+    static createProjects() {
 
+        const projectContainer = document.createElement('div');
+        projectContainer.classList.add('project-container');
 
-        const itemContainer = document.createElement('div');
-        itemContainer.classList.add('item-container');
-        const testItems = [1, 2, 3, 4, 5];
+        const testProjects = [1, 2, 3, 4, 5];
 
-        testItems.forEach((item) => {
-            const testItem = document.createElement('div');
-            testItem.classList.add('item');
-            testItem.innerHTML = "Project Item";
-            itemContainer.appendChild(testItem);
+        testProjects.forEach(() => {
+            const projectItem = document.createElement('div');
+            projectItem.classList.add('item');
+            projectItem.innerHTML = "Project Item";
+            projectContainer.appendChild(projectItem);
         });
 
-        page.appendChild(itemContainer);
-        document.body.appendChild(page);
+        return projectContainer;
     }
 
 }
