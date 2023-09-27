@@ -18,11 +18,12 @@ export default class UI {
         testItems.forEach((item) => {
             const testItem = document.createElement('div');
             testItem.classList.add('item');
-            testItem.innerHTML = "Todo Item";
+            testItem.innerHTML = "Project Item";
             itemContainer.appendChild(testItem);
         });
 
         page.appendChild(itemContainer);
         document.body.appendChild(page);
     }
+
 }
