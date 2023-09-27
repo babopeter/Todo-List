@@ -1,10 +1,10 @@
 export default class UI {
     
     static loadHomepage() {
-        const element = document.createElement('div');
-  
-        element.innerHTML = _.join(['The', 'homepage'], ' ');
+        const title = document.createElement('div');
+        title.classList.add('title');
+        title.innerHTML = _.join(['Todo', 'List'], ' ');
 
-        document.body.appendChild(element);
+        document.body.appendChild(title);
     }
 }
