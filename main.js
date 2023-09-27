@@ -426,6 +426,27 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/modules/Task.js":
+/*!*****************************!*\
+  !*** ./src/modules/Task.js ***!
+  \*****************************/
+/***/ (() => {
+
+eval("\n\n//# sourceURL=webpack://todo-list/./src/modules/Task.js?");
+
+/***/ }),
+
+/***/ "./src/modules/TodoList.js":
+/*!*********************************!*\
+  !*** ./src/modules/TodoList.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ TodoList)\n/* harmony export */ });\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Project */ \"./src/modules/Project.js\");\n/* harmony import */ var _Task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Task */ \"./src/modules/Task.js\");\n/* harmony import */ var _Task__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Task__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nclass TodoList {\n    constructor() {\n        this.projects = [];\n        this.projects.push(new _Project__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Daily Tasks\"));\n        this.projects.push(new _Project__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Weekly Tasks\"));\n        this.projects.push(new _Project__WEBPACK_IMPORTED_MODULE_0__[\"default\"](\"Monthly Tasks\"));\n    }\n\n    static getProjects() {\n        return this.projects;\n    }\n\n    static setProjects(newProjects) {\n        this.projects = newProjects;\n    }\n\n    static addProject(newProject) {\n        this.projects.push(newProject);\n    }\n\n    static deleteProject(project) {\n        this.projects.splice(this.projects.indexOf(project), 1);\n    }\n}\n\n//# sourceURL=webpack://todo-list/./src/modules/TodoList.js?");
+
+/***/ }),
+
 /***/ "./src/modules/UI.js":
 /*!***************************!*\
   !*** ./src/modules/UI.js ***!
@@ -433,7 +454,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ UI)\n/* harmony export */ });\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Project */ \"./src/modules/Project.js\");\n\n\n\nclass UI {\n    \n    static loadHomepage() {\n        const page = document.createElement('div');\n        page.classList.add('page');\n\n        page.appendChild(UI.createTitle());\n        page.appendChild(UI.createProjects());\n\n        document.body.appendChild(page);\n    }\n\n    static createTitle() {\n        const title = document.createElement('div');\n        title.classList.add('title');\n        title.innerHTML = \"Todo List\";\n        return title;\n    }\n\n    static createProjects() {\n\n        const projectContainer = document.createElement('div');\n        projectContainer.classList.add('project-container');\n\n        const testProjects = [1, 2, 3, 4, 5];\n\n        testProjects.forEach(() => {\n            const projectItem = document.createElement('div');\n            projectItem.classList.add('item');\n            projectItem.innerHTML = \"Project Item\";\n            projectContainer.appendChild(projectItem);\n        });\n\n        return projectContainer;\n    }\n\n}\n\n//# sourceURL=webpack://todo-list/./src/modules/UI.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ UI)\n/* harmony export */ });\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Project */ \"./src/modules/Project.js\");\n/* harmony import */ var _Task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Task */ \"./src/modules/Task.js\");\n/* harmony import */ var _Task__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Task__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _TodoList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TodoList */ \"./src/modules/TodoList.js\");\n\n\n\n\n\nclass UI {\n    \n    static loadHomepage() {\n        const page = document.createElement('div');\n        page.classList.add('page');\n\n        page.appendChild(UI.createTitle());\n        page.appendChild(UI.createProjects());\n\n        document.body.appendChild(page);\n    }\n\n    static createTitle() {\n        const title = document.createElement('div');\n        title.classList.add('title');\n        title.innerHTML = \"Todo List\";\n        return title;\n    }\n\n    static createProjects() {\n\n        const projectContainer = document.createElement('div');\n        projectContainer.classList.add('project-container');\n\n\n        // const dailyTasks = new Project(\"Daily Tasks\");\n        // const weeklyTasks = new Project(\"Weekly Tasks\");\n        // const monthlyTasks = new Project(\"Monthly Tasks\");\n        \n        const projects = _TodoList__WEBPACK_IMPORTED_MODULE_3__[\"default\"].getProjects();\n        console.log(projects);\n        //projects is undefined\n        \n\n\n        // projects.forEach((project) => {\n        //     const projectItem = document.createElement('div');\n        //     projectItem.classList.add('item');\n        //     projectItem.innerHTML = project.getName();\n        //     projectContainer.appendChild(projectItem);\n        // });\n\n\n\n        // const testProjects = [1, 2, 3, 4, 5];\n\n        // testProjects.forEach(() => {\n        //     const projectItem = document.createElement('div');\n        //     projectItem.classList.add('item');\n        //     projectItem.innerHTML = \"Project Item\";\n        //     projectContainer.appendChild(projectItem);\n        // });\n\n        return projectContainer;\n    }\n\n}\n\n//# sourceURL=webpack://todo-list/./src/modules/UI.js?");
 
 /***/ }),
 
