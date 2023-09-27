@@ -1,5 +1,7 @@
 import { create } from "lodash";
 import Project from "./Project";
+import Task from "./Task";
+import TodoList from "./TodoList";
 
 export default class UI {
     
@@ -25,14 +27,34 @@ export default class UI {
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
 
-        const testProjects = [1, 2, 3, 4, 5];
 
-        testProjects.forEach(() => {
-            const projectItem = document.createElement('div');
-            projectItem.classList.add('item');
-            projectItem.innerHTML = "Project Item";
-            projectContainer.appendChild(projectItem);
-        });
+        // const dailyTasks = new Project("Daily Tasks");
+        // const weeklyTasks = new Project("Weekly Tasks");
+        // const monthlyTasks = new Project("Monthly Tasks");
+        
+        const projects = TodoList.getProjects();
+        console.log(projects);
+        //projects is undefined
+        
+
+
+        // projects.forEach((project) => {
+        //     const projectItem = document.createElement('div');
+        //     projectItem.classList.add('item');
+        //     projectItem.innerHTML = project.getName();
+        //     projectContainer.appendChild(projectItem);
+        // });
+
+
+
+        // const testProjects = [1, 2, 3, 4, 5];
+
+        // testProjects.forEach(() => {
+        //     const projectItem = document.createElement('div');
+        //     projectItem.classList.add('item');
+        //     projectItem.innerHTML = "Project Item";
+        //     projectContainer.appendChild(projectItem);
+        // });
 
         return projectContainer;
     }
