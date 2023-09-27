@@ -37,7 +37,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var loda
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ UI)\n/* harmony export */ });\nclass UI {\n    \n    static loadHomepage() {\n        const element = document.createElement('div');\n  \n        element.innerHTML = _.join(['The', 'homepage'], ' ');\n\n        document.body.appendChild(element);\n    }\n\n}\n\n//# sourceURL=webpack://todo-list/./src/modules/UI.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ UI)\n/* harmony export */ });\nclass UI {\n    \n    static loadHomepage() {\n        const title = document.createElement('div');\n        title.classList.add('title');\n        title.innerHTML = _.join(['Todo', 'List'], ' ');\n\n        document.body.appendChild(title);\n    }\n}\n\n//# sourceURL=webpack://todo-list/./src/modules/UI.js?");
 
 /***/ })
 
