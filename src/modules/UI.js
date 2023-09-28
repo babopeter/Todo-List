@@ -14,7 +14,7 @@ export default class UI {
         const page = document.createElement('div');
         page.classList.add('page');
         
-        page.appendChild(UI.createTitle());
+        page.appendChild(UI.createTitles());
         page.appendChild(UI.createProjects());
         page.appendChild(UI.createTasks());
 
@@ -26,10 +26,20 @@ export default class UI {
         UI.taskButtonListener();
     }
 
-    static createTitle() {
+    static createTitles() {
         const title = document.createElement('div');
         title.classList.add('title');
-        title.innerHTML = "Todo List";
+
+        const projectTitle = document.createElement('div');
+        projectTitle.classList.add('project-title');
+        projectTitle.innerHTML = "Projects";
+
+        const taskTitle = document.createElement('div');
+        taskTitle.classList.add('task-title');
+        taskTitle.innerHTML = "Tasks";
+
+        title.appendChild(projectTitle);
+        title.appendChild(taskTitle);
         return title;
     }
 
