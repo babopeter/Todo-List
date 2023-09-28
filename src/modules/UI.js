@@ -4,7 +4,7 @@ import Task from "./Task";
 import TodoList from "./TodoList";
 
 export default class UI {
-    
+
     static loadHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
@@ -14,6 +14,9 @@ export default class UI {
         page.appendChild(UI.createTasks());
 
         document.body.appendChild(page);
+
+        UI.projectButtonListener();
+        UI.taskButtonListener();
     }
 
     static createTitle() {
@@ -26,13 +29,12 @@ export default class UI {
     static createProjects() {
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
-        
+
         const defaultList = new TodoList();
         const defaultProjects = defaultList.getProjects();
-        console.log(defaultProjects);
 
         defaultProjects.forEach((project) => {
-            const projectItem = document.createElement('div');
+            const projectItem = document.createElement('button');
             projectItem.classList.add('project-item');
             projectItem.innerHTML = project.getName();
             projectContainer.appendChild(projectItem);
@@ -47,7 +49,7 @@ export default class UI {
 
         const task1 = new Task("Task 1", "This is task 1", "2021-09-01", "High");
 
-        const taskItem = document.createElement('div');
+        const taskItem = document.createElement('button');
         taskItem.classList.add('task-item');
 
         const taskName = document.createElement('div');
@@ -55,8 +57,8 @@ export default class UI {
         taskName.innerHTML = task1.getName();
 
         taskItem.appendChild(taskName);
-        
-        
+
+
         const taskDueDate = document.createElement('div');
         taskDueDate.classList.add('task-due-date');
         taskDueDate.innerHTML = task1.getDueDate();
@@ -65,5 +67,23 @@ export default class UI {
         taskContainer.appendChild(taskItem);
 
         return taskContainer;
+    }
+
+    static projectButtonListener() {
+        const projectButtons = document.querySelectorAll('.project-item');
+        projectButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                console.log("clicked");
+            });
+        });
+    }
+
+    static taskButtonListener() {
+        const taskButtons = document.querySelectorAll('.task-item');
+        taskButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                console.log("clicked");
+            });
+        });
     }
 }
