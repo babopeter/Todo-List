@@ -33,7 +33,7 @@ export default class UI {
 
         defaultProjects.forEach((project) => {
             const projectItem = document.createElement('div');
-            projectItem.classList.add('item');
+            projectItem.classList.add('project-item');
             projectItem.innerHTML = project.getName();
             projectContainer.appendChild(projectItem);
         });
