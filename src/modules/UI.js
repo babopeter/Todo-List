@@ -5,16 +5,23 @@ import TodoList from "./TodoList";
 
 export default class UI {
 
+    static load() {
+        UI.loadHomepage();
+        UI.loadEventListeners();
+    }
+
     static loadHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
-
+        
         page.appendChild(UI.createTitle());
         page.appendChild(UI.createProjects());
         page.appendChild(UI.createTasks());
 
         document.body.appendChild(page);
+    }
 
+    static loadEventListeners() {
         UI.projectButtonListener();
         UI.taskButtonListener();
     }
@@ -86,4 +93,5 @@ export default class UI {
             });
         });
     }
+
 }
