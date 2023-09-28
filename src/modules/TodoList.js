@@ -9,19 +9,19 @@ export default class TodoList {
         this.projects.push(new Project("Monthly Tasks"));
     }
 
-    static getProjects() {
+    getProjects() {
         return this.projects;
     }
 
-    static setProjects(newProjects) {
+    setProjects(newProjects) {
         this.projects = newProjects;
     }
 
-    static addProject(newProject) {
+    addProject(newProject) {
         this.projects.push(newProject);
     }
 
-    static deleteProject(project) {
+    deleteProject(project) {
         this.projects.splice(this.projects.indexOf(project), 1);
     }
 }

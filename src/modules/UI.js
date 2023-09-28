@@ -23,40 +23,20 @@ export default class UI {
     }
 
     static createProjects() {
-
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
-
-
-        // const dailyTasks = new Project("Daily Tasks");
-        // const weeklyTasks = new Project("Weekly Tasks");
-        // const monthlyTasks = new Project("Monthly Tasks");
         
-        const projects = TodoList.getProjects();
-        console.log(projects);
-        //projects is undefined
-        
+        const defaultList = new TodoList();
+        const defaultProjects = defaultList.getProjects();
+        console.log(defaultProjects);
 
-
-        // projects.forEach((project) => {
-        //     const projectItem = document.createElement('div');
-        //     projectItem.classList.add('item');
-        //     projectItem.innerHTML = project.getName();
-        //     projectContainer.appendChild(projectItem);
-        // });
-
-
-
-        // const testProjects = [1, 2, 3, 4, 5];
-
-        // testProjects.forEach(() => {
-        //     const projectItem = document.createElement('div');
-        //     projectItem.classList.add('item');
-        //     projectItem.innerHTML = "Project Item";
-        //     projectContainer.appendChild(projectItem);
-        // });
+        defaultProjects.forEach((project) => {
+            const projectItem = document.createElement('div');
+            projectItem.classList.add('item');
+            projectItem.innerHTML = project.getName();
+            projectContainer.appendChild(projectItem);
+        });
 
         return projectContainer;
     }
-
 }
