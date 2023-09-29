@@ -4,29 +4,33 @@ import Task from "./Task";
 import TodoList from "./TodoList";
 
 export default class UI {
-
-    static load() {
-        UI.loadHomepage();
-        UI.loadEventListeners();
+    constructor() {
+        this.todoList = new TodoList();
+        this.projects = this.todoList.getProjects();
     }
 
-    static loadHomepage() {
+    load() {
+        this.loadHomepage();
+        this.loadEventListeners();
+    }
+
+    loadHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
-        
-        page.appendChild(UI.createTitles());
-        page.appendChild(UI.createProjects());
-        page.appendChild(UI.createTasks());
+
+        page.appendChild(this.createTitles());
+        page.appendChild(this.createProjects());
+        page.appendChild(this.createTasks());
 
         document.body.appendChild(page);
     }
 
-    static loadEventListeners() {
-        UI.projectButtonListener();
-        UI.taskButtonListener();
+    loadEventListeners() {
+        this.projectButtonListener();
+        this.taskButtonListener();
     }
 
-    static createTitles() {
+    createTitles() {
         const title = document.createElement('div');
         title.classList.add('title');
 
@@ -43,14 +47,11 @@ export default class UI {
         return title;
     }
 
-    static createProjects() {
+    createProjects() {
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
 
-        const defaultList = new TodoList();
-        const defaultProjects = defaultList.getProjects();
-
-        defaultProjects.forEach((project) => {
+        this.projects.forEach((project) => {
             const projectItem = document.createElement('button');
             projectItem.classList.add('project-item');
             projectItem.innerHTML = project.getName();
@@ -60,42 +61,56 @@ export default class UI {
         return projectContainer;
     }
 
-    static createTasks() {
+    createTasks() {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
 
         const task1 = new Task("Task 1", "This is task 1", "2021-09-01", "High");
+        this.projects[0].addTask(task1);
 
-        const taskItem = document.createElement('button');
-        taskItem.classList.add('task-item');
-
-        const taskName = document.createElement('div');
-        taskName.classList.add('task-name');
-        taskName.innerHTML = task1.getName();
-
-        taskItem.appendChild(taskName);
-
-
-        const taskDueDate = document.createElement('div');
-        taskDueDate.classList.add('task-due-date');
-        taskDueDate.innerHTML = task1.getDueDate();
-        taskItem.appendChild(taskDueDate);
+        const taskItem = this.createTaskItem(task1);
 
         taskContainer.appendChild(taskItem);
 
         return taskContainer;
     }
 
-    static projectButtonListener() {
+    createTaskItem(task) {
+        const taskItem = document.createElement('button');
+        taskItem.classList.add('task-item');
+
+        const taskName = document.createElement('div');
+        taskName.classList.add('task-name');
+        taskName.innerHTML = task.getName();
+
+        taskItem.appendChild(taskName);
+
+        const taskDueDate = document.createElement('div');
+        taskDueDate.classList.add('task-due-date');
+        taskDueDate.innerHTML = task.getDueDate();
+        taskItem.appendChild(taskDueDate);
+
+        return taskItem;
+    }
+
+    projectButtonListener() {
         const projectButtons = document.querySelectorAll('.project-item');
         projectButtons.forEach((button) => {
             button.addEventListener('click', () => {
-                console.log("clicked");
+                const projectName = button.innerHTML;
+                let project;
+                this.projects.forEach((proj) => {
+                    if (proj.getName() === projectName) {
+                        project = proj;
+                        this.switchProject(project);
+                    }
+                });
+                console.log(project); // log project name
             });
         });
     }
 
-    static taskButtonListener() {
+    taskButtonListener() {
         const taskButtons = document.querySelectorAll('.task-item');
         taskButtons.forEach((button) => {
             button.addEventListener('click', () => {
@@ -104,4 +119,13 @@ export default class UI {
         });
     }
 
+    switchProject(project) {
+        const taskContainer = document.querySelector('.task-container');
+        taskContainer.innerHTML = "";
+        const projectTasks = project.getTasks();
+        projectTasks.forEach((task) => {
+            const taskItem = this.createTaskItem(task);
+            taskContainer.appendChild(taskItem);
+        });
+    }
 }
