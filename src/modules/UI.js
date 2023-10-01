@@ -18,10 +18,14 @@ export default class UI {
         const page = document.createElement('div');
         page.classList.add('page');
 
+        const projectContainer = document.createElement('div');
+        projectContainer.classList.add('project-container');
+
         page.appendChild(this.createTitles());
         page.appendChild(this.createProjects());
         page.appendChild(this.createTasks());
-        page.appendChild(this.createProjectButton());
+        // page.appendChild(this.createProjectButton());
+        page.appendChild(this.addProjectForm());
 
         document.body.appendChild(page);
     }
@@ -29,7 +33,8 @@ export default class UI {
     loadEventListeners() {
         this.projectButtonListener();
         this.taskButtonListener();
-        this.addProjectListener();
+        // this.addProjectListener();
+        this.addProjectFormListener();
     }
 
     createTitles() {
@@ -63,11 +68,45 @@ export default class UI {
         return projectContainer;
     }
 
-    createProjectButton() {
-        const addProjectButton = document.createElement('button');
-        addProjectButton.classList.add('add-project-button');
-        addProjectButton.innerHTML = "Add Project";
-        return addProjectButton;
+    // createProjectButton() {
+    //     const addProjectButton = document.createElement('button');
+    //     addProjectButton.classList.add('add-project-button');
+    //     addProjectButton.innerHTML = "Add Project";
+    //     return addProjectButton;
+    // }
+
+    addProjectForm() {
+        const addProjectForm = document.createElement('form');
+        addProjectForm.classList.add('add-project-form');
+
+        const projectNameInput = document.createElement('input');
+        projectNameInput.classList.add('project-name-input');
+        projectNameInput.setAttribute('type', 'text');
+        projectNameInput.setAttribute('placeholder', 'Project Name');
+
+        const submitProjectButton = document.createElement('button');
+        submitProjectButton.classList.add('submit-project-button');
+        submitProjectButton.innerHTML = "Create Project";
+
+        addProjectForm.appendChild(projectNameInput);
+        addProjectForm.appendChild(submitProjectButton);
+
+        return addProjectForm;
+    }
+
+    addProjectFormListener() {
+        const addProjectForm = document.querySelector('.add-project-form');
+        addProjectForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const projectName = addProjectForm.querySelector('.project-name-input').value;
+            const project = new Project(projectName);
+            this.projects.push(project);
+            const projectContainer = document.querySelector('.project-container');
+            const projectItem = document.createElement('button');
+            projectItem.classList.add('project-item');
+            projectItem.innerHTML = projectName;
+            projectContainer.appendChild(projectItem);
+        });
     }
 
     createTasks() {
@@ -144,14 +183,14 @@ export default class UI {
         });
     }
 
-    addProjectListener() {
-        const addProjectButton = document.querySelector('.add-project-button');
-        addProjectButton.addEventListener('click', () => {
-            const projectContainer = document.querySelector('.project-container');
-            const projectItem = document.createElement('button');
-            projectItem.classList.add('project-item');
-            projectItem.innerHTML = "New Project";
-            projectContainer.appendChild(projectItem);
-        });
-    }
+    // addProjectListener() {
+    //     const addProjectButton = document.querySelector('.add-project-button');
+    //     addProjectButton.addEventListener('click', () => {
+    //         const projectContainer = document.querySelector('.project-container');
+    //         const projectItem = document.createElement('button');
+    //         projectItem.classList.add('project-item');
+    //         projectItem.innerHTML = "New Project";
+    //         projectContainer.appendChild(projectItem);
+    //     });
+    // }
 }
