@@ -24,7 +24,6 @@ export default class UI {
         page.appendChild(this.createTitles());
         page.appendChild(this.createProjects());
         page.appendChild(this.createTasks());
-        // page.appendChild(this.addProjectForm());
 
         document.body.appendChild(page);
     }
@@ -33,6 +32,7 @@ export default class UI {
         this.projectButtonListener();
         this.taskButtonListener();
         this.addProjectFormListener();
+        this.addTaskFormListener();
     }
 
     createTitles() {
@@ -103,6 +103,79 @@ export default class UI {
         });
     }
 
+    addTaskForm() {
+        const addTaskForm = document.createElement('form');
+        addTaskForm.classList.add('add-task-form');
+
+        const taskNameInput = document.createElement('input');
+        taskNameInput.classList.add('task-name-input');
+        taskNameInput.setAttribute('type', 'text');
+        taskNameInput.setAttribute('placeholder', 'Task Name');
+
+        const taskDescriptionInput = document.createElement('input');
+        taskDescriptionInput.classList.add('task-description-input');
+        taskDescriptionInput.setAttribute('type', 'text');
+        taskDescriptionInput.setAttribute('placeholder', 'Task Description');
+
+        const taskDueDateInput = document.createElement('input');
+        taskDueDateInput.classList.add('task-due-date-input');
+        taskDueDateInput.setAttribute('type', 'date');
+
+        const taskPriorityInput = document.createElement('select');
+        taskPriorityInput.classList.add('task-priority-input');
+
+        const highPriority = document.createElement('option');
+        highPriority.setAttribute('value', 'High');
+        highPriority.innerHTML = "High";
+
+        const mediumPriority = document.createElement('option');
+        mediumPriority.setAttribute('value', 'Medium');
+        mediumPriority.innerHTML = "Medium";
+
+        const lowPriority = document.createElement('option');
+        lowPriority.setAttribute('value', 'Low');
+        lowPriority.innerHTML = "Low";
+
+        taskPriorityInput.appendChild(highPriority);
+        taskPriorityInput.appendChild(mediumPriority);
+        taskPriorityInput.appendChild(lowPriority);
+
+        const submitTaskButton = document.createElement('button');
+        submitTaskButton.classList.add('submit-task-button');
+        submitTaskButton.innerHTML = "Create Task";
+
+        addTaskForm.appendChild(taskNameInput);
+        addTaskForm.appendChild(taskDescriptionInput);
+        addTaskForm.appendChild(taskDueDateInput);
+        addTaskForm.appendChild(taskPriorityInput);
+        addTaskForm.appendChild(submitTaskButton);
+
+        return addTaskForm;
+    }
+
+    addTaskFormListener() {
+        const addTaskForm = document.querySelector('.add-task-form');
+        addTaskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const taskName = addTaskForm.querySelector('.task-name-input').value;
+            const taskDescription = addTaskForm.querySelector('.task-description-input').value;
+            const taskDueDate = addTaskForm.querySelector('.task-due-date-input').value;
+            const taskPriority = addTaskForm.querySelector('.task-priority-input').value;
+            const task = new Task(taskName, taskDescription, taskDueDate, taskPriority);
+            const project = this.projects[0];
+            project.addTask(task);
+            const taskContainer = document.querySelector('.task-container');
+            const taskItem = this.createTaskItem(task);
+            taskContainer.appendChild(taskItem);
+            addTaskForm.querySelector('.task-name-input').value = "";
+            addTaskForm.querySelector('.task-description-input').value = "";
+            addTaskForm.querySelector('.task-due-date-input').value = "";
+            addTaskForm.querySelector('.task-priority-input').value = "";
+            this.refreshTasks();
+            console.log(this.projects);
+        });
+    }
+
     createTasks() {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
@@ -119,6 +192,7 @@ export default class UI {
         const taskItem = this.createTaskItem(task1);
 
         taskContainer.appendChild(taskItem);
+        taskContainer.appendChild(this.addTaskForm());
 
         return taskContainer;
     }
@@ -137,6 +211,7 @@ export default class UI {
         taskDueDate.classList.add('task-due-date');
         taskDueDate.innerHTML = task.getDueDate();
         taskItem.appendChild(taskDueDate);
+        
 
         return taskItem;
     }
@@ -175,6 +250,7 @@ export default class UI {
             const taskItem = this.createTaskItem(task);
             taskContainer.appendChild(taskItem);
         });
+        taskContainer.appendChild(this.addTaskForm());
     }
 
     refreshProjects() {
@@ -187,6 +263,19 @@ export default class UI {
             projectContainer.appendChild(projectItem);
         });
         projectContainer.appendChild(this.addProjectForm());
+        this.loadEventListeners();
+    }
+
+    refreshTasks() {
+        const taskContainer = document.querySelector('.task-container');
+        taskContainer.innerHTML = "";
+        const project = this.projects[0];
+        const projectTasks = project.getTasks();
+        projectTasks.forEach((task) => {
+            const taskItem = this.createTaskItem(task);
+            taskContainer.appendChild(taskItem);
+        });
+        taskContainer.appendChild(this.addTaskForm());
         this.loadEventListeners();
     }
 }
