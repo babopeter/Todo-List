@@ -187,5 +187,6 @@ export default class UI {
             projectContainer.appendChild(projectItem);
         });
         projectContainer.appendChild(this.addProjectForm());
+        this.loadEventListeners();
     }
 }
