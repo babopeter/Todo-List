@@ -24,8 +24,7 @@ export default class UI {
         page.appendChild(this.createTitles());
         page.appendChild(this.createProjects());
         page.appendChild(this.createTasks());
-        // page.appendChild(this.createProjectButton());
-        page.appendChild(this.addProjectForm());
+        // page.appendChild(this.addProjectForm());
 
         document.body.appendChild(page);
     }
@@ -33,7 +32,6 @@ export default class UI {
     loadEventListeners() {
         this.projectButtonListener();
         this.taskButtonListener();
-        // this.addProjectListener();
         this.addProjectFormListener();
     }
 
@@ -64,16 +62,9 @@ export default class UI {
             projectItem.innerHTML = project.getName();
             projectContainer.appendChild(projectItem);
         });
-
+        projectContainer.appendChild(this.addProjectForm());
         return projectContainer;
     }
-
-    // createProjectButton() {
-    //     const addProjectButton = document.createElement('button');
-    //     addProjectButton.classList.add('add-project-button');
-    //     addProjectButton.innerHTML = "Add Project";
-    //     return addProjectButton;
-    // }
 
     addProjectForm() {
         const addProjectForm = document.createElement('form');
@@ -106,6 +97,9 @@ export default class UI {
             projectItem.classList.add('project-item');
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
+            addProjectForm.querySelector('.project-name-input').value = "";
+            this.refreshProjects();
+            console.log(this.projects);
         });
     }
 
@@ -183,14 +177,15 @@ export default class UI {
         });
     }
 
-    // addProjectListener() {
-    //     const addProjectButton = document.querySelector('.add-project-button');
-    //     addProjectButton.addEventListener('click', () => {
-    //         const projectContainer = document.querySelector('.project-container');
-    //         const projectItem = document.createElement('button');
-    //         projectItem.classList.add('project-item');
-    //         projectItem.innerHTML = "New Project";
-    //         projectContainer.appendChild(projectItem);
-    //     });
-    // }
+    refreshProjects() {
+        const projectContainer = document.querySelector('.project-container');
+        projectContainer.innerHTML = "";
+        this.projects.forEach((project) => {
+            const projectItem = document.createElement('button');
+            projectItem.classList.add('project-item');
+            projectItem.innerHTML = project.getName();
+            projectContainer.appendChild(projectItem);
+        });
+        projectContainer.appendChild(this.addProjectForm());
+    }
 }
