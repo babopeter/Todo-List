@@ -71,6 +71,7 @@ export default class UI {
         addProjectForm.classList.add('add-project-form');
 
         const projectNameInput = document.createElement('input');
+        projectNameInput.required = true;
         projectNameInput.classList.add('project-name-input');
         projectNameInput.setAttribute('type', 'text');
         projectNameInput.setAttribute('placeholder', 'Project Name');
@@ -108,6 +109,7 @@ export default class UI {
         addTaskForm.classList.add('add-task-form');
 
         const taskNameInput = document.createElement('input');
+        taskNameInput.required = true;
         taskNameInput.classList.add('task-name-input');
         taskNameInput.setAttribute('type', 'text');
         taskNameInput.setAttribute('placeholder', 'Task Name');
@@ -118,6 +120,7 @@ export default class UI {
         taskDescriptionInput.setAttribute('placeholder', 'Task Description');
 
         const taskDueDateInput = document.createElement('input');
+        taskDueDateInput.required = true;
         taskDueDateInput.classList.add('task-due-date-input');
         taskDueDateInput.setAttribute('type', 'date');
 
