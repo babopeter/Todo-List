@@ -7,6 +7,7 @@ export default class UI {
     constructor() {
         this.todoList = new TodoList();
         this.projects = this.todoList.getProjects();
+        this.currentProject = this.projects[0];
     }
 
     load() {
@@ -164,15 +165,22 @@ export default class UI {
             const taskDescription = addTaskForm.querySelector('.task-description-input').value;
             const taskDueDate = addTaskForm.querySelector('.task-due-date-input').value;
             const taskPriority = addTaskForm.querySelector('.task-priority-input').value;
+            
             const task = new Task(taskName, taskDescription, taskDueDate, taskPriority);
-            const project = this.projects[0];
-            project.addTask(task);
+            // const project = this.projects[0];
+            // project.addTask(task);
+
+            this.currentProject.addTask(task);
+            console.log(this.currentProject); // new task gets added correctly
+
             const taskContainer = document.querySelector('.task-container');
             const taskItem = this.createTaskItem(task);
             taskContainer.appendChild(taskItem);
+
             addTaskForm.querySelector('.task-name-input').value = "";
             addTaskForm.querySelector('.task-description-input').value = "";
             addTaskForm.querySelector('.task-due-date-input').value = "";
+            
             addTaskForm.querySelector('.task-priority-input').value = "";
             this.refreshTasks();
             console.log(this.projects);
@@ -224,14 +232,16 @@ export default class UI {
         projectButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 const projectName = button.innerHTML;
-                let project;
+                // let project;
                 this.projects.forEach((proj) => {
                     if (proj.getName() === projectName) {
-                        project = proj;
-                        this.switchProject(project);
+                        this.currentProject = proj;
+                        // project = proj;
+                        this.switchProject(this.currentProject);
                     }
                 });
-                console.log(project); // log project name
+   
+                console.log(this.currentProject); // log project name
             });
         });
     }
@@ -269,11 +279,16 @@ export default class UI {
         this.loadEventListeners();
     }
 
+    // This doesn't work, when the tasks get refreshed the newly created task is not loaded
     refreshTasks() {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
-        const project = this.projects[0];
+        // const project = this.projects[0];
+        const project = this.currentProject;
+
         const projectTasks = project.getTasks();
+        console.log(projectTasks); // the new task is loaded by the getter
+
         projectTasks.forEach((task) => {
             const taskItem = this.createTaskItem(task);
             taskContainer.appendChild(taskItem);
