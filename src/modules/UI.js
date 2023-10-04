@@ -262,6 +262,7 @@ export default class UI {
         taskContainer.appendChild(this.addTaskForm());
 
         this.currentProject = project;
+        this.highlightCurrentProject();
         this.addTaskFormListener();
     }
 
@@ -289,5 +290,16 @@ export default class UI {
     
         taskContainer.appendChild(this.addTaskForm());
         this.taskButtonListener();
-      }
+    }
+
+    highlightCurrentProject() {
+        const projectButtons = document.querySelectorAll('.project-item');
+        projectButtons.forEach((button) => {
+            if (button.innerHTML === this.currentProject.getName()) {
+                button.classList.add('current-project');
+            } else {
+                button.classList.remove('current-project');
+            }
+        });
+    }
 }

@@ -76,11 +76,9 @@ body {
     background-color: #eee;
 }
 
-/* .add-project-form {
-    grid-column: 1 / 2;
-    grid-row: 2 / 2;
-    padding-left: 20px;
-} */
+.current-project {
+    background-color: #eee;
+}
 
 .task-container {
     grid-column: 2 / 3;
