@@ -5,17 +5,22 @@ import TodoList from "./TodoList";
 
 export default class UI {
     constructor() {
+        this.initializeTodoList();
+    }
+
+    initializeTodoList() {
         this.todoList = new TodoList();
         this.projects = this.todoList.getProjects();
         this.currentProject = this.projects[0];
     }
 
     load() {
-        this.loadHomepage();
-        this.loadEventListeners();
+        this.createHomepage();
+        this.setupEventListeners();
     }
 
-    loadHomepage() {
+     // Create the main UI components and append them to the page element
+    createHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
 
@@ -29,13 +34,15 @@ export default class UI {
         document.body.appendChild(page);
     }
 
-    loadEventListeners() {
+    // Add event listeners for project and task actions
+    setupEventListeners() {
         this.projectButtonListener();
         this.taskButtonListener();
         this.addProjectFormListener();
         this.addTaskFormListener();
     }
 
+    // Create the title elements for the project and task columns
     createTitles() {
         const title = document.createElement('div');
         title.classList.add('title');
@@ -50,9 +57,12 @@ export default class UI {
 
         title.appendChild(projectTitle);
         title.appendChild(taskTitle);
+
         return title;
     }
 
+    // Create the project elements and append them to the project container
+    // Also append the add project form to the project container
     createProjects() {
         const projectContainer = document.createElement('div');
         projectContainer.classList.add('project-container');
@@ -63,10 +73,13 @@ export default class UI {
             projectItem.innerHTML = project.getName();
             projectContainer.appendChild(projectItem);
         });
+
         projectContainer.appendChild(this.addProjectForm());
+
         return projectContainer;
     }
 
+    // Create the add project form
     addProjectForm() {
         const addProjectForm = document.createElement('form');
         addProjectForm.classList.add('add-project-form');
@@ -87,6 +100,7 @@ export default class UI {
         return addProjectForm;
     }
 
+    // Add event listener for the add project form
     addProjectFormListener() {
         const addProjectForm = document.querySelector('.add-project-form');
         addProjectForm.addEventListener('submit', (e) => {
@@ -106,6 +120,7 @@ export default class UI {
         });
     }
 
+    // Create the add task form
     addTaskForm() {
         const addTaskForm = document.createElement('form');
         addTaskForm.classList.add('add-task-form');
@@ -158,6 +173,7 @@ export default class UI {
         return addTaskForm;
     }
 
+    // Add event listener for the add task form
     addTaskFormListener() {
         const addTaskForm = document.querySelector('.add-task-form');
         addTaskForm.addEventListener('submit', (e) => {
@@ -187,6 +203,7 @@ export default class UI {
         });
     }
 
+    // Create the default task elements and append them to the task container
     createTasks() {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
@@ -208,6 +225,7 @@ export default class UI {
         return taskContainer;
     }
 
+    // Create the task element for a given task
     createTaskItem(task) {
         const taskItem = document.createElement('button');
         taskItem.classList.add('task-item');
@@ -227,6 +245,7 @@ export default class UI {
         return taskItem;
     }
 
+    // Add event listener for the project buttons
     projectButtonListener() {
         const projectButtons = document.querySelectorAll('.project-item');
         projectButtons.forEach((button) => {
@@ -242,6 +261,7 @@ export default class UI {
         });
     }
 
+    // Add event listener for the task buttons
     taskButtonListener() {
         const taskButtons = document.querySelectorAll('.task-item');
         taskButtons.forEach((button) => {
@@ -251,6 +271,7 @@ export default class UI {
         });
     }
 
+    // Switch the current project to the given project
     switchProject(project) {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
@@ -266,6 +287,7 @@ export default class UI {
         this.addTaskFormListener();
     }
 
+    // Refresh the project elements
     refreshProjects() {
         const projectContainer = document.querySelector('.project-container');
         projectContainer.innerHTML = "";
@@ -279,6 +301,7 @@ export default class UI {
         this.projectButtonListener();
     }
 
+    // Refresh the task elements
     refreshTasks() {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
@@ -292,6 +315,7 @@ export default class UI {
         this.taskButtonListener();
     }
 
+    // Highlight the current project
     highlightCurrentProject() {
         const projectButtons = document.querySelectorAll('.project-item');
         projectButtons.forEach((button) => {
