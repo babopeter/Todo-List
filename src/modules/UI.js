@@ -100,6 +100,7 @@ export default class UI {
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
             addProjectForm.querySelector('.project-name-input').value = "";
+            
             this.refreshProjects();
             console.log(this.projects);
         });
@@ -167,11 +168,9 @@ export default class UI {
             const taskPriority = addTaskForm.querySelector('.task-priority-input').value;
             
             const task = new Task(taskName, taskDescription, taskDueDate, taskPriority);
-            // const project = this.projects[0];
-            // project.addTask(task);
 
             this.currentProject.addTask(task);
-            console.log(this.currentProject); // new task gets added correctly
+            console.log(this.currentProject);
 
             const taskContainer = document.querySelector('.task-container');
             const taskItem = this.createTaskItem(task);
@@ -180,9 +179,10 @@ export default class UI {
             addTaskForm.querySelector('.task-name-input').value = "";
             addTaskForm.querySelector('.task-description-input').value = "";
             addTaskForm.querySelector('.task-due-date-input').value = "";
-            
             addTaskForm.querySelector('.task-priority-input').value = "";
+            
             this.refreshTasks();
+            this.addTaskFormListener();
             console.log(this.projects);
         });
     }
@@ -232,16 +232,12 @@ export default class UI {
         projectButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 const projectName = button.innerHTML;
-                // let project;
                 this.projects.forEach((proj) => {
                     if (proj.getName() === projectName) {
                         this.currentProject = proj;
-                        // project = proj;
                         this.switchProject(this.currentProject);
                     }
                 });
-   
-                console.log(this.currentProject); // log project name
             });
         });
     }
@@ -264,6 +260,9 @@ export default class UI {
             taskContainer.appendChild(taskItem);
         });
         taskContainer.appendChild(this.addTaskForm());
+
+        this.currentProject = project;
+        this.addTaskFormListener();
     }
 
     refreshProjects() {
@@ -276,24 +275,19 @@ export default class UI {
             projectContainer.appendChild(projectItem);
         });
         projectContainer.appendChild(this.addProjectForm());
-        this.loadEventListeners();
+        this.projectButtonListener();
     }
 
-    // This doesn't work, when the tasks get refreshed the newly created task is not loaded
     refreshTasks() {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
-        // const project = this.projects[0];
-        const project = this.currentProject;
-
-        const projectTasks = project.getTasks();
-        console.log(projectTasks); // the new task is loaded by the getter
-
-        projectTasks.forEach((task) => {
-            const taskItem = this.createTaskItem(task);
-            taskContainer.appendChild(taskItem);
+    
+        this.currentProject.getTasks().forEach((task) => {
+          const taskItem = this.createTaskItem(task);
+          taskContainer.appendChild(taskItem);
         });
+    
         taskContainer.appendChild(this.addTaskForm());
-        this.loadEventListeners();
-    }
+        this.taskButtonListener();
+      }
 }
