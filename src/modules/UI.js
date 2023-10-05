@@ -1,4 +1,4 @@
-import { create } from "lodash";
+import { add, create } from "lodash";
 import Project from "./Project";
 import Task from "./Task";
 import TodoList from "./TodoList";
@@ -81,8 +81,18 @@ export default class UI {
 
     // Create the add project form
     addProjectForm() {
+        const addProjectFormContainer = document.createElement('div');
+        const toggleProjectFormButton = document.createElement('button');
+        toggleProjectFormButton.classList.add('toggle-project-form-button');
+        toggleProjectFormButton.innerHTML = "+";
+
         const addProjectForm = document.createElement('form');
         addProjectForm.classList.add('add-project-form');
+
+        toggleProjectFormButton.addEventListener('click', () => {
+            addProjectForm.classList.toggle('hidden');
+        });
+        
 
         const projectNameInput = document.createElement('input');
         projectNameInput.required = true;
@@ -94,10 +104,13 @@ export default class UI {
         submitProjectButton.classList.add('submit-project-button');
         submitProjectButton.innerHTML = "Create Project";
 
+
+        addProjectFormContainer.appendChild(toggleProjectFormButton);
         addProjectForm.appendChild(projectNameInput);
         addProjectForm.appendChild(submitProjectButton);
+        addProjectFormContainer.appendChild(addProjectForm);
 
-        return addProjectForm;
+        return addProjectFormContainer;
     }
 
     // Add event listener for the add project form
@@ -121,7 +134,7 @@ export default class UI {
             projectItem.classList.add('project-item');
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
-            
+
             addProjectForm.querySelector('.project-name-input').value = "";
             
             this.refreshProjects();
@@ -132,6 +145,7 @@ export default class UI {
         
     }
 
+    // Check if a project with the given name already exists
     projectNameExists(name) {
         return this.projects.some((project) => project.getName() === name);
     }
