@@ -105,19 +105,35 @@ export default class UI {
         const addProjectForm = document.querySelector('.add-project-form');
         addProjectForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const projectName = addProjectForm.querySelector('.project-name-input').value;
+            const projectNameInput = addProjectForm.querySelector('.project-name-input').value;
+            const projectName = projectNameInput.charAt(0).toUpperCase() + projectNameInput.slice(1);
+
+            if (this.projectNameExists(projectName)) {
+                alert("Project name already exists!");
+                return;
+            }
+            
             const project = new Project(projectName);
             this.projects.push(project);
+
             const projectContainer = document.querySelector('.project-container');
             const projectItem = document.createElement('button');
             projectItem.classList.add('project-item');
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
+            
             addProjectForm.querySelector('.project-name-input').value = "";
             
             this.refreshProjects();
+            this.addProjectFormListener();
             console.log(this.projects);
         });
+
+        
+    }
+
+    projectNameExists(name) {
+        return this.projects.some((project) => project.getName() === name);
     }
 
     // Create the add task form
