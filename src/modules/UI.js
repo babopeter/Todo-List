@@ -40,7 +40,7 @@ export default class UI {
         this.taskButtonListener();
         this.addProjectFormListener();
         this.addTaskFormListener();
-        // this.deleteProjectListener();
+        this.deleteProjectListener();
     }
 
     // Create the title elements for the project and task columns
@@ -346,7 +346,7 @@ export default class UI {
         });
         projectContainer.appendChild(this.addProjectForm());
         this.projectButtonListener();
-        // this.deleteProjectListener();
+        this.deleteProjectListener();
     }
 
     // Refresh the task elements
@@ -382,17 +382,17 @@ export default class UI {
         });
     }
 
-    // Delete the given project
-    // deleteProjectListener() {
-    //     const deleteProjectButtons = document.querySelectorAll('.delete-project-button');
-    //     const project = deleteProjectButtons.parentElement;
-        
-    //     deleteProjectButtons.forEach((button) => {
-    //         button.addEventListener('click', () => {
-    //             this.todoList.deleteProject(project);
-    //             this.refreshProjects();
-    //             this.addProjectFormListener();
-    //         });
-    //     });
-    // }
+    //Delete the given project
+    deleteProjectListener() {
+        const deleteProjectButtons = document.querySelectorAll('.delete-project-button');
+        deleteProjectButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const projectIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract project index from class
+                const project = this.projects[projectIndex];
+                this.todoList.deleteProject(project);
+                this.refreshProjects();
+                this.switchProject(this.projects[0]);
+            });
+        });
+    }
 }
