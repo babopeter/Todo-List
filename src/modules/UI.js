@@ -280,6 +280,11 @@ export default class UI {
         taskDueDate.classList.add('task-due-date');
         taskDueDate.innerHTML = task.getDueDate();
         taskItem.appendChild(taskDueDate);
+
+        const deleteTaskButton = document.createElement('button');
+        deleteTaskButton.classList.add('delete-task-button');
+        deleteTaskButton.innerHTML = "X";
+        taskItem.appendChild(deleteTaskButton);
         
 
         return taskItem;
