@@ -347,6 +347,7 @@ export default class UI {
         projectContainer.appendChild(this.addProjectForm());
         this.projectButtonListener();
         this.deleteProjectListener();
+        this.addProjectFormListener();
     }
 
     // Refresh the task elements
@@ -367,9 +368,6 @@ export default class UI {
     highlightCurrentProject() {
         const projectButtons = document.querySelectorAll('.project-item');
         
-
-
-
         projectButtons.forEach((button) => {
             const projectIndex = parseInt(button.classList[1].split('-')[2]); // Extract project index from class
             const project = this.projects[projectIndex];
