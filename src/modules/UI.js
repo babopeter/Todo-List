@@ -17,6 +17,7 @@ export default class UI {
     load() {
         this.createHomepage();
         this.setupEventListeners();
+        this.highlightCurrentProject();
     }
 
      // Create the main UI components and append them to the page element
@@ -41,6 +42,7 @@ export default class UI {
         this.addProjectFormListener();
         this.addTaskFormListener();
         this.deleteProjectListener();
+        this.deleteTaskListener();
     }
 
     // Create the title elements for the project and task columns
@@ -267,8 +269,10 @@ export default class UI {
 
     // Create the task element for a given task
     createTaskItem(task) {
+        const index = this.currentProject.getTasks().indexOf(task);
         const taskItem = document.createElement('button');
         taskItem.classList.add('task-item');
+        taskItem.classList.add(`task-item-${index}`); // add index for easier access
 
         const taskName = document.createElement('div');
         taskName.classList.add('task-name');
@@ -285,7 +289,6 @@ export default class UI {
         deleteTaskButton.classList.add('delete-task-button');
         deleteTaskButton.innerHTML = "X";
         taskItem.appendChild(deleteTaskButton);
-        
 
         return taskItem;
     }
@@ -330,6 +333,7 @@ export default class UI {
         this.currentProject = project;
         this.highlightCurrentProject();
         this.addTaskFormListener();
+        this.deleteTaskListener();
     }
 
     // Refresh the project elements
@@ -353,6 +357,7 @@ export default class UI {
         this.projectButtonListener();
         this.deleteProjectListener();
         this.addProjectFormListener();
+        this.deleteTaskListener();
     }
 
     // Refresh the task elements
@@ -367,6 +372,7 @@ export default class UI {
     
         taskContainer.appendChild(this.addTaskForm());
         this.taskButtonListener();
+        this.deleteTaskListener();
     }
 
     // Highlight the current project
@@ -395,6 +401,18 @@ export default class UI {
                 this.todoList.deleteProject(project);
                 this.refreshProjects();
                 this.switchProject(this.projects[0]);
+            });
+        });
+    }
+
+    deleteTaskListener() {
+        const deleteTaskButtons = document.querySelectorAll('.delete-task-button');
+        deleteTaskButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const taskIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract task index from class
+                const task = this.currentProject.getTasks()[taskIndex];
+                this.currentProject.deleteTask(task);
+                this.refreshTasks();
             });
         });
     }
