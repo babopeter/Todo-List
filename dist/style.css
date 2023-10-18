@@ -52,7 +52,6 @@ body {
 .project-container {
     grid-column: 1 / 2;
     grid-row: 2 / 2;
-    /* grid-row: 3 / 3; */
     padding: 20px;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
@@ -68,7 +67,8 @@ body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 200px 25px;
+
 }
 
 .project-item:hover {
@@ -106,5 +106,12 @@ body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 25px;
+    grid-template-rows: 1fr 1fr;
+}
+
+.task-item > div {
+    align-self: center;
+    justify-self: start;
+    padding-left: 20px;
 }

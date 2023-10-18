@@ -284,20 +284,22 @@ export default class UI {
         taskDueDate.innerHTML = task.getDueDate();
         taskItem.appendChild(taskDueDate);
 
-        const taskPriority = document.createElement('div');
-        taskPriority.classList.add('task-priority');
-        taskPriority.innerHTML = task.getPriority();
-        taskItem.appendChild(taskPriority);
+        const deleteTaskButton = document.createElement('button');
+        deleteTaskButton.classList.add('delete-task-button');
+        deleteTaskButton.innerHTML = "X";
+        taskItem.appendChild(deleteTaskButton);
+        
 
         const taskDescription = document.createElement('div');
         taskDescription.classList.add('task-description');
         taskDescription.innerHTML = task.getDescription();
         taskItem.appendChild(taskDescription);
 
-        const deleteTaskButton = document.createElement('button');
-        deleteTaskButton.classList.add('delete-task-button');
-        deleteTaskButton.innerHTML = "X";
-        taskItem.appendChild(deleteTaskButton);
+       
+        const taskPriority = document.createElement('div');
+        taskPriority.classList.add('task-priority');
+        taskPriority.innerHTML = task.getPriority();
+        taskItem.appendChild(taskPriority);
 
         return taskItem;
     }
