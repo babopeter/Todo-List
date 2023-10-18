@@ -74,7 +74,11 @@ export default class UI {
             const projectItem = document.createElement('button');
             projectItem.classList.add('project-item');
             projectItem.classList.add(`project-item-${index}`); // add index for easier access
-            projectItem.innerHTML = project.getName();
+
+            const projectName = document.createElement('div');
+            projectName.classList.add('project-name');
+            projectName.innerHTML = project.getName();
+            projectItem.appendChild(projectName);
             
 
             const deleteProjectButton = document.createElement('button');
