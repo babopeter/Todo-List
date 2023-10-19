@@ -284,8 +284,11 @@ export default class UI {
         taskItem.appendChild(taskName);
 
         const taskDueDate = document.createElement('div');
+        const clockIcon = document.createElement('i');
         taskDueDate.classList.add('task-due-date');
+        clockIcon.classList.add('fa-regular', 'fa-clock');
         taskDueDate.innerHTML = task.getDueDate();
+        taskDueDate.prepend(clockIcon);
         taskItem.appendChild(taskDueDate);
 
         const deleteTaskButton = document.createElement('button');
