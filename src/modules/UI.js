@@ -99,10 +99,11 @@ export default class UI {
         const addProjectFormContainer = document.createElement('div');
         const toggleProjectFormButton = document.createElement('button');
         toggleProjectFormButton.classList.add('toggle-project-form-button');
-        toggleProjectFormButton.innerHTML = "+";
+        toggleProjectFormButton.innerHTML = "New project";
 
         const addProjectForm = document.createElement('form');
         addProjectForm.classList.add('add-project-form');
+        addProjectForm.classList.add('hidden');
 
         toggleProjectFormButton.addEventListener('click', () => {
             addProjectForm.classList.toggle('hidden');
@@ -147,17 +148,16 @@ export default class UI {
             const projectContainer = document.querySelector('.project-container');
             const projectItem = document.createElement('button');
             projectItem.classList.add('project-item');
-            projectItem.classList.add(`project-item-${this.projects.length - 1}`); // -1 might not work
+            projectItem.classList.add(`project-item-${this.projects.length - 1}`); // add index for easier access
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
 
-            addProjectForm.querySelector('.project-name-input').value = "";
             
             this.refreshProjects();
-            this.addProjectFormListener();
             console.log(this.projects);
         });
 
+        addProjectForm.querySelector('.project-name-input').value = "";
         
     }
 
@@ -423,6 +423,7 @@ export default class UI {
         });
     }
 
+    // Delete the given task
     deleteTaskListener() {
         const deleteTaskButtons = document.querySelectorAll('.delete-task-button');
         deleteTaskButtons.forEach((button) => {
