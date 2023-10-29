@@ -71,7 +71,8 @@ export default class UI {
         projectContainer.classList.add('project-container');
 
         this.projects.forEach((project, index) => {
-            const projectItem = document.createElement('button');
+            
+            const projectItem = document.createElement('div');
             projectItem.classList.add('project-item');
             projectItem.classList.add(`project-item-${index}`); // add index for easier access
 
@@ -80,11 +81,13 @@ export default class UI {
             projectName.innerHTML = project.getName();
             projectItem.appendChild(projectName);
             
+            this.addDeleteProjectButton(projectItem);
+            
 
-            const deleteProjectButton = document.createElement('button');
-            deleteProjectButton.classList.add('delete-project-button');
-            deleteProjectButton.innerHTML = "X";
-            projectItem.appendChild(deleteProjectButton);
+            // const deleteProjectButton = document.createElement('button');
+            // deleteProjectButton.classList.add('delete-project-button');
+            // deleteProjectButton.innerHTML = "X";
+            // projectItem.appendChild(deleteProjectButton);
 
             projectContainer.appendChild(projectItem);
         });
@@ -92,6 +95,19 @@ export default class UI {
         projectContainer.appendChild(this.addProjectForm());
 
         return projectContainer;
+    }
+
+    // Add delete project button to the given project
+    addDeleteProjectButton(project) {
+        const deleteProjectButton = document.createElement('div');
+        deleteProjectButton.classList.add('delete-project-button');
+        // deleteProjectButton.classList.add("fa-regular", "fa-trash-can");
+        project.appendChild(deleteProjectButton);
+    }
+
+    toggleDeleteProjectButton(project) {
+        const deleteProjectButton = project.querySelector('.delete-project-button');
+        deleteProjectButton.classList.toggle('hidden');
     }
 
     // Create the add project form
@@ -146,7 +162,7 @@ export default class UI {
             this.todoList.addProject(project);
 
             const projectContainer = document.querySelector('.project-container');
-            const projectItem = document.createElement('button');
+            const projectItem = document.createElement('div');
             projectItem.classList.add('project-item');
             projectItem.classList.add(`project-item-${this.projects.length - 1}`); // add index for easier access
             projectItem.innerHTML = projectName;
@@ -315,13 +331,15 @@ export default class UI {
     projectButtonListener() {
         const projectButtons = document.querySelectorAll('.project-item');
         projectButtons.forEach((button) => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', () => { // changed to mouseup to prevent double click
                 const projectIndex = parseInt(button.classList[1].split('-')[2]); // Extract project index from class
                 const project = this.projects[projectIndex];
                 
                 this.currentProject = project;
                 console.log(this.currentProject);
+                console.log(`Clicked ${project.getName()}`); // log clicked project
                 this.switchProject(this.currentProject);
+                console.log(`The current project is ${this.currentProject.getName()}`); // log current project
                 this.highlightCurrentProject();
             });
         });
@@ -352,6 +370,8 @@ export default class UI {
         this.highlightCurrentProject();
         this.addTaskFormListener();
         this.deleteTaskListener();
+
+        console.log(`Switched to ${project.getName()}`); // log switched to project
     }
 
     // Refresh the project elements
@@ -359,19 +379,17 @@ export default class UI {
         const projectContainer = document.querySelector('.project-container');
         projectContainer.innerHTML = "";
         this.projects.forEach((project, index) => {
-            const projectItem = document.createElement('button');
+            const projectItem = document.createElement('div');
             projectItem.classList.add('project-item');
             projectItem.classList.add(`project-item-${index}`)
             projectItem.innerHTML = project.getName();
 
-            const deleteProjectButton = document.createElement('button');
-            deleteProjectButton.classList.add('delete-project-button');
-            deleteProjectButton.innerHTML = "X";
-            projectItem.appendChild(deleteProjectButton);
+            this.addDeleteProjectButton(projectItem);
 
             projectContainer.appendChild(projectItem);
         });
         projectContainer.appendChild(this.addProjectForm());
+        console.log("Refreshed projects"); // log refreshed projects
         this.projectButtonListener();
         this.deleteProjectListener();
         this.addProjectFormListener();
@@ -396,15 +414,20 @@ export default class UI {
     // Highlight the current project
     highlightCurrentProject() {
         const projectButtons = document.querySelectorAll('.project-item');
+
         
         projectButtons.forEach((button) => {
             const projectIndex = parseInt(button.classList[1].split('-')[2]); // Extract project index from class
             const project = this.projects[projectIndex];
+            const deleteProjectButton = button.querySelector('.delete-project-button');
 
             if (project.getName() === this.currentProject.getName()) {
                 button.classList.add('current-project');
+                deleteProjectButton.classList.add('fa-regular', 'fa-trash-can');
+                
             } else {
                 button.classList.remove('current-project');
+                deleteProjectButton.classList.remove('fa-regular', 'fa-trash-can');
             }
         });
     }
@@ -414,13 +437,19 @@ export default class UI {
         const deleteProjectButtons = document.querySelectorAll('.delete-project-button');
         deleteProjectButtons.forEach((button) => {
             button.addEventListener('click', () => {
+
+                console.log("Delete project clicked"); // log delete project clicked
                 const projectIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract project index from class
                 const project = this.projects[projectIndex];
                 this.todoList.deleteProject(project);
                 this.refreshProjects();
-                this.switchProject(this.projects[0]);
+                this.currentProject = this.projects[0];
+                this.refreshTasks();
+                this.highlightCurrentProject();
             });
         });
+
+        
     }
 
     // Delete the given task
