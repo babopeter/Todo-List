@@ -121,11 +121,11 @@ body {
     padding-left: 20px;
 }
 
-.fa-clock {
+.fa-calendar {
     padding-right: 10px;
 }
 
 .task-due-date {
     color: red;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
