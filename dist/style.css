@@ -124,3 +124,8 @@ body {
 .fa-clock {
     padding-right: 10px;
 }
+
+.task-due-date {
+    color: red;
+    border: 1px solid red;
+}
