@@ -286,7 +286,7 @@ export default class UI {
         const taskDueDate = document.createElement('div');
         const clockIcon = document.createElement('i');
         taskDueDate.classList.add('task-due-date');
-        clockIcon.classList.add('fa-regular', 'fa-clock');
+        clockIcon.classList.add('fa-regular', 'fa-calendar');
         taskDueDate.innerHTML = task.getDueDate();
         taskDueDate.prepend(clockIcon);
         taskItem.appendChild(taskDueDate);
