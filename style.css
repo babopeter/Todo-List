@@ -79,8 +79,26 @@ body {
     background-color: #eee;
 }
 
-.hidden {
-    display: none;
+.add-project-form-container {
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.add-project-form {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    gap: 10px;
+    grid-template-rows: 1fr;
+}
+
+.project-name-input {
+    grid-column: 1 / 2;
+    grid-row: 1 / 1;
+    padding-left: 10px;
 }
 
 .task-container {
