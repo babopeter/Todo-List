@@ -208,13 +208,14 @@ export default class UI {
 
         const submitTaskButton = document.createElement('button');
         submitTaskButton.classList.add('submit-task-button');
-        submitTaskButton.innerHTML = "Create Task";
+        submitTaskButton.innerHTML = "+Add";
 
         addTaskForm.appendChild(taskNameInput);
-        addTaskForm.appendChild(taskDescriptionInput);
         addTaskForm.appendChild(taskDueDateInput);
-        addTaskForm.appendChild(taskPriorityInput);
         addTaskForm.appendChild(submitTaskButton);
+        addTaskForm.appendChild(taskDescriptionInput);
+        addTaskForm.appendChild(taskPriorityInput);
+        
 
         return addTaskForm;
     }

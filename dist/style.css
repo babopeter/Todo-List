@@ -123,7 +123,7 @@ body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: grid;
-    grid-template-columns: 2fr 1fr 25px;
+    grid-template-columns: 2fr 1fr .5fr;
     grid-template-rows: 1fr 1fr;
 }
 
@@ -140,4 +140,42 @@ body {
 .task-due-date {
     color: red;
     /* border: 1px solid red; */
+}
+
+.add-task-form {
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: 2fr 1fr .5fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+
+}
+
+.task-name-input {
+    width: 35%;
+    
+}
+
+.task-due-date-input {
+    width: 45%;
+    
+}
+
+.task-description-input {
+    
+}
+
+.task-priority-input {
+    width: 25%;
+    
+}
+
+.submit-task-button {
+    width: 45%;
+   
 }
