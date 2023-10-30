@@ -290,7 +290,7 @@ export default class UI {
     // Create the task element for a given task
     createTaskItem(task) {
         const index = this.currentProject.getTasks().indexOf(task);
-        const taskItem = document.createElement('button');
+        const taskItem = document.createElement('div');
         taskItem.classList.add('task-item');
         taskItem.classList.add(`task-item-${index}`); // add index for easier access
 
@@ -307,9 +307,10 @@ export default class UI {
         taskDueDate.prepend(clockIcon);
         taskItem.appendChild(taskDueDate);
 
-        const deleteTaskButton = document.createElement('button');
+        const deleteTaskButton = document.createElement('div');
         deleteTaskButton.classList.add('delete-task-button');
-        deleteTaskButton.innerHTML = "X";
+        deleteTaskButton.classList.add("fa-regular", "fa-trash-can");
+        // deleteTaskButton.innerHTML = "X";
         taskItem.appendChild(deleteTaskButton);
         
 
