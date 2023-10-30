@@ -82,12 +82,6 @@ export default class UI {
             projectItem.appendChild(projectName);
             
             this.addDeleteProjectButton(projectItem);
-            
-
-            // const deleteProjectButton = document.createElement('button');
-            // deleteProjectButton.classList.add('delete-project-button');
-            // deleteProjectButton.innerHTML = "X";
-            // projectItem.appendChild(deleteProjectButton);
 
             projectContainer.appendChild(projectItem);
         });
@@ -113,18 +107,10 @@ export default class UI {
     // Create the add project form
     addProjectForm() {
         const addProjectFormContainer = document.createElement('div');
-        const toggleProjectFormButton = document.createElement('button');
-        toggleProjectFormButton.classList.add('toggle-project-form-button');
-        toggleProjectFormButton.innerHTML = "New project";
+        addProjectFormContainer.classList.add('add-project-form-container');
 
         const addProjectForm = document.createElement('form');
         addProjectForm.classList.add('add-project-form');
-        addProjectForm.classList.add('hidden');
-
-        toggleProjectFormButton.addEventListener('click', () => {
-            addProjectForm.classList.toggle('hidden');
-        });
-        
 
         const projectNameInput = document.createElement('input');
         projectNameInput.required = true;
@@ -134,10 +120,8 @@ export default class UI {
 
         const submitProjectButton = document.createElement('button');
         submitProjectButton.classList.add('submit-project-button');
-        submitProjectButton.innerHTML = "Create Project";
+        submitProjectButton.innerHTML = "+Add";
 
-
-        addProjectFormContainer.appendChild(toggleProjectFormButton);
         addProjectForm.appendChild(projectNameInput);
         addProjectForm.appendChild(submitProjectButton);
         addProjectFormContainer.appendChild(addProjectForm);
