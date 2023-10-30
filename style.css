@@ -70,12 +70,6 @@ body {
     grid-template-columns: 1fr 25px;
 }
 
-.project-item > div {
-    align-self: center;
-    justify-self: start;
-    padding-left: 20px;
-}
-
 .project-item:hover {
     cursor: pointer;
     background-color: #eee;
