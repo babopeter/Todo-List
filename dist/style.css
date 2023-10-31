@@ -70,6 +70,13 @@ body {
     grid-template-columns: 1fr 25px;
 }
 
+.delete-project-button {
+    grid-column: 2 / 3;
+    grid-row: 1 / 1;
+    justify-self: end;
+    align-self: start;
+}
+
 .project-item:hover {
     cursor: pointer;
     background-color: #eee;
@@ -139,7 +146,6 @@ body {
 
 .task-due-date {
     color: red;
-    /* border: 1px solid red; */
 }
 
 .add-task-form {
@@ -153,22 +159,19 @@ body {
     grid-template-columns: 2fr 1fr .5fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px;
-
 }
 
 .task-name-input {
     width: 35%;
-    
 }
 
 .task-due-date-input {
     width: 45%;
-    
 }
 
-.task-description-input {
+/* .task-description-input {
     
-}
+} */
 
 .task-priority-input {
     width: 25%;
@@ -177,5 +180,4 @@ body {
 
 .submit-task-button {
     width: 45%;
-   
 }
