@@ -148,6 +148,13 @@ body {
     color: red;
 }
 
+.delete-task-button.fa-regular.fa-trash-can {
+    grid-column: 3 / 4;
+    grid-row: 1 / 1;
+    justify-self: end;
+    align-self: start;
+}
+
 .add-task-form {
     border: 1px solid #333;
     padding: 20px;
