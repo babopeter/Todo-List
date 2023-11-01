@@ -1,5 +1,5 @@
 :root {
-    --darkblue: #0f172a;
+    --darkblue: #01013d;
     --darkestblue: #020617;
     --lightblue: #64748b;
     --white: #f1f5f9;
@@ -11,6 +11,7 @@ body {
     /* color: #333; */
     font-size: 12px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-image: url("../src/images/background.jpg");
 }
 
 .page {
@@ -30,7 +31,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr;
-    background-color: var(--darkblue);
+    /* background-color: var(--darkblue); */
     color: var(--white);
     height: 100%;
 }
@@ -62,8 +63,9 @@ body {
     padding: 20px;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
-    border-right: 1px solid var(--darkblue);
-    border-top: 1px solid var(--darkblue);
+    /* border-right: 1px solid var(--darkblue);
+    border-top: 1px solid var(--darkblue); */
+    /* background-color: var(--darkblue); */
 }
 
 .project-item {
@@ -124,7 +126,8 @@ body {
     display: grid;
     /* grid-template-rows: repeat(auto-fill, minmax(150px, 1fr)); */
     grid-template-rows: repeat(auto-fill, minmax(100px, 200px));
-    border-top: 1px solid #333;
+    /* border-top: 1px solid #333; */
+    /* background-image: url("../src/images/background.jpg"); */
 }
 
 .task-item:hover {
