@@ -160,8 +160,16 @@ body {
     padding-right: 10px;
 }
 
-.task-due-date {
+.task-due-date.overdue{
     color: red;
+}
+
+.task-due-date.due{
+    color: green;
+}
+
+.task-due-date.today {
+    color: orange;
 }
 
 .delete-task-button.fa-regular.fa-trash-can {
