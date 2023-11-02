@@ -173,12 +173,14 @@ export default class UI {
         addTaskForm.classList.add('add-task-form');
 
         const taskNameInput = document.createElement('input');
+        taskNameInput.maxLength = 60;
         taskNameInput.required = true;
         taskNameInput.classList.add('task-name-input');
         taskNameInput.setAttribute('type', 'text');
         taskNameInput.setAttribute('placeholder', 'Task Name');
 
         const taskDescriptionInput = document.createElement('input');
+        taskDescriptionInput.maxLength = 60;
         taskDescriptionInput.classList.add('task-description-input');
         taskDescriptionInput.setAttribute('type', 'text');
         taskDescriptionInput.setAttribute('placeholder', 'Task Description');
