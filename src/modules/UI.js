@@ -113,6 +113,7 @@ export default class UI {
         addProjectForm.classList.add('add-project-form');
 
         const projectNameInput = document.createElement('input');
+        projectNameInput.maxLength = 40;
         projectNameInput.required = true;
         projectNameInput.classList.add('project-name-input');
         projectNameInput.setAttribute('type', 'text');
