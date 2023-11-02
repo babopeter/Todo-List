@@ -261,15 +261,12 @@ export default class UI {
         const task1 = new Task("Task 1", "This is task 1", "2021-09-01", "High");
         this.projects[0].addTask(task1);
         task1.setDueDate("1993-08-10");
-        task1.evaluateDate();
 
         const task2 = new Task("Task 2", "This is task 2", "2024-09-02", "Medium");
         this.projects[1].addTask(task2);
-        task2.evaluateDate();
 
         const task3 = new Task("Task 3", "This is task 3", "2023-11-02", "Low");
         this.projects[2].addTask(task3);
-        task3.evaluateDate();
 
         const taskItem = this.createTaskItem(task1);
 
@@ -294,6 +291,7 @@ export default class UI {
         const taskDueDate = document.createElement('div');
         const clockIcon = document.createElement('i');
         taskDueDate.classList.add('task-due-date');
+        taskDueDate.classList.add(task.evaluateDate());
         clockIcon.classList.add('fa-regular', 'fa-calendar');
         taskDueDate.innerHTML = task.getDueDate();
         taskDueDate.prepend(clockIcon);
@@ -318,18 +316,6 @@ export default class UI {
 
         return taskItem;
     }
-
-    // colorTaskDueDate(taskItem) {
-    //     const taskDueDate = taskItem.querySelector('.task-due-date');
-    //     console.log(taskDueDate.innerHTML);
-    //     if (taskDueDate.evaluateDate() === "overdue") {
-    //         taskDueDate.classList.add('overdue');
-    //     } else if (task.evaluateDate() === "due") {
-    //         taskDueDate.classList.add('due');
-    //     } else {
-    //         taskDueDate.classList.add('today');
-    //     }
-    // }
 
     // Add event listener for the project buttons
     projectButtonListener() {
