@@ -1,3 +1,7 @@
+import { compareAsc, format } from 'date-fns'
+
+format(new Date(2014, 1, 11), 'yyyy-MM-dd')
+
 export default class Task {
     constructor(name, description, dueDate, priority) {
         this.name = name;
@@ -38,5 +42,18 @@ export default class Task {
         this.priority = newPriority;
     }
 
-    
+    evaluateDate() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const dueDate = new Date(this.dueDate);
+        dueDate.setHours(0, 0, 0, 0);
+        const result = compareAsc(today, dueDate);
+        if (result === 1) {
+            return "overdue";
+        } else if (result === -1) {
+            return "due";
+        } else {
+            return "today";
+        }
+    }
 }
