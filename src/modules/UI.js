@@ -1,17 +1,29 @@
-import { add, create } from "lodash";
+import { add, create, forEach } from "lodash";
 import Project from "./Project";
 import Task from "./Task";
 import TodoList from "./TodoList";
+import { el } from "date-fns/locale";
+import Storage from "./Storage";
+
+const storage = new Storage();
 
 export default class UI {
+    
     constructor() {
         this.initializeTodoList();
     }
 
     initializeTodoList() {
-        this.todoList = new TodoList();
-        this.projects = this.todoList.getProjects();
-        this.currentProject = this.projects[0];
+        if (localStorage.getItem("todoList")) {
+            this.todoList = storage.loadTodoList();
+            this.projects = this.todoList.getProjects();
+            this.currentProject = this.projects[0];
+        } else {
+            this.todoList = new TodoList();
+            this.projects = this.todoList.getProjects();
+            this.currentProject = this.projects[0];
+            storage.saveTodoList(this.todoList);
+        }
     }
 
     load() {
@@ -20,7 +32,7 @@ export default class UI {
         this.highlightCurrentProject();
     }
 
-     // Create the main UI components and append them to the page element
+    // Create the main UI components and append them to the page element
     createHomepage() {
         const page = document.createElement('div');
         page.classList.add('page');
@@ -31,7 +43,8 @@ export default class UI {
         page.appendChild(this.createTitles());
         page.appendChild(this.createProjects());
         page.appendChild(this.createTasks());
-
+        page.appendChild(this.createResetButton());
+        
         document.body.appendChild(page);
     }
 
@@ -43,6 +56,7 @@ export default class UI {
         this.addTaskFormListener();
         this.deleteProjectListener();
         this.deleteTaskListener();
+        this.resetButtonListener();
     }
 
     // Create the title elements for the project and task columns
@@ -71,7 +85,7 @@ export default class UI {
         projectContainer.classList.add('project-container');
 
         this.projects.forEach((project, index) => {
-            
+
             const projectItem = document.createElement('div');
             projectItem.classList.add('project-item');
             projectItem.classList.add(`project-item-${index}`); // add index for easier access
@@ -80,7 +94,7 @@ export default class UI {
             projectName.classList.add('project-name');
             projectName.innerHTML = project.getName();
             projectItem.appendChild(projectName);
-            
+
             this.addDeleteProjectButton(projectItem);
 
             projectContainer.appendChild(projectItem);
@@ -142,9 +156,10 @@ export default class UI {
                 alert("Project name already exists!");
                 return;
             }
-            
+
             const project = new Project(projectName);
             this.todoList.addProject(project);
+            storage.addProject(project); // store the project in local storage
 
             const projectContainer = document.querySelector('.project-container');
             const projectItem = document.createElement('div');
@@ -153,13 +168,13 @@ export default class UI {
             projectItem.innerHTML = projectName;
             projectContainer.appendChild(projectItem);
 
-            
+
             this.refreshProjects();
             console.log(this.projects);
         });
 
         addProjectForm.querySelector('.project-name-input').value = "";
-        
+
     }
 
     // Check if a project with the given name already exists
@@ -218,7 +233,7 @@ export default class UI {
         addTaskForm.appendChild(submitTaskButton);
         addTaskForm.appendChild(taskDescriptionInput);
         addTaskForm.appendChild(taskPriorityInput);
-        
+
 
         return addTaskForm;
     }
@@ -232,10 +247,11 @@ export default class UI {
             const taskDescription = addTaskForm.querySelector('.task-description-input').value;
             const taskDueDate = addTaskForm.querySelector('.task-due-date-input').value;
             const taskPriority = addTaskForm.querySelector('.task-priority-input').value;
-            
+
             const task = new Task(taskName, taskDescription, taskDueDate, taskPriority);
 
             this.currentProject.addTask(task);
+            storage.addTask(this.currentProject, task); // store the task in local storage
             console.log(this.currentProject);
 
             const taskContainer = document.querySelector('.task-container');
@@ -246,7 +262,7 @@ export default class UI {
             addTaskForm.querySelector('.task-description-input').value = "";
             addTaskForm.querySelector('.task-due-date-input').value = "";
             addTaskForm.querySelector('.task-priority-input').value = "";
-            
+
             this.refreshTasks();
             this.addTaskFormListener();
             console.log(this.projects);
@@ -254,23 +270,44 @@ export default class UI {
     }
 
     // Create the default task elements and append them to the task container
+    
+    // createDefaultTasks() {
+    //     const taskContainer = document.createElement('div');
+    //     taskContainer.classList.add('task-container');
+
+    //     // Create a demo daily task
+    //     const task1 = new Task("Meditate", "Every morning for 10 minutes.", "2023-11-01", "Medium");
+    //     // this.projects[0].addTask(task1);
+    //     storage.addTask(this.projects[0], task1); // store the task in local storage
+
+    //     // Create a demo weekly task
+    //     const task2 = new Task("Vacuum", "Clean the whole apartment", "2024-10-28", "High");
+    //     // this.projects[1].addTask(task2);
+    //     storage.addTask(this.projects[1], task2); // store the task in local storage
+
+    //     // Create a demo monthly task
+    //     const task3 = new Task("Todo List", "Finish the application", "2023-11-05", "Low");
+    //     // this.projects[2].addTask(task3);
+    //     storage.addTask(this.projects[2], task3); // store the task in local storage
+
+    //     const taskItem = this.createTaskItem(task1);
+
+    //     taskContainer.appendChild(taskItem);
+    //     taskContainer.appendChild(this.addTaskForm());
+
+    //     return taskContainer;
+    // }
+
     createTasks() {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
 
-        const task1 = new Task("Task 1", "This is task 1", "2021-09-01", "High");
-        this.projects[0].addTask(task1);
-        task1.setDueDate("1993-08-10");
+        // create a task item for each task in the existing projects
+        this.currentProject.getTasks().forEach((task) => {
+            const taskItem = this.createTaskItem(task);
+            taskContainer.appendChild(taskItem);
+        });
 
-        const task2 = new Task("Task 2", "This is task 2", "2024-09-02", "Medium");
-        this.projects[1].addTask(task2);
-
-        const task3 = new Task("Task 3", "This is task 3", "2023-11-02", "Low");
-        this.projects[2].addTask(task3);
-
-        const taskItem = this.createTaskItem(task1);
-
-        taskContainer.appendChild(taskItem);
         taskContainer.appendChild(this.addTaskForm());
 
         return taskContainer;
@@ -301,14 +338,14 @@ export default class UI {
         deleteTaskButton.classList.add('delete-task-button');
         deleteTaskButton.classList.add("fa-regular", "fa-trash-can");
         taskItem.appendChild(deleteTaskButton);
-        
+
 
         const taskDescription = document.createElement('div');
         taskDescription.classList.add('task-description');
         taskDescription.innerHTML = task.getDescription();
         taskItem.appendChild(taskDescription);
 
-       
+
         const taskPriority = document.createElement('div');
         taskPriority.classList.add('task-priority');
         taskPriority.innerHTML = task.getPriority();
@@ -324,7 +361,7 @@ export default class UI {
             button.addEventListener('click', () => { // changed to mouseup to prevent double click
                 const projectIndex = parseInt(button.classList[1].split('-')[2]); // Extract project index from class
                 const project = this.projects[projectIndex];
-                
+
                 this.currentProject = project;
                 console.log(this.currentProject);
                 console.log(`Clicked ${project.getName()}`); // log clicked project
@@ -390,12 +427,12 @@ export default class UI {
     refreshTasks() {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
-    
+
         this.currentProject.getTasks().forEach((task) => {
-          const taskItem = this.createTaskItem(task);
-          taskContainer.appendChild(taskItem);
+            const taskItem = this.createTaskItem(task);
+            taskContainer.appendChild(taskItem);
         });
-    
+
         taskContainer.appendChild(this.addTaskForm());
         this.taskButtonListener();
         this.deleteTaskListener();
@@ -404,7 +441,7 @@ export default class UI {
     // Highlight the current project
     highlightCurrentProject() {
         const projectButtons = document.querySelectorAll('.project-item');
-        
+
         projectButtons.forEach((button) => {
             const projectIndex = parseInt(button.classList[1].split('-')[2]); // Extract project index from class
             const project = this.projects[projectIndex];
@@ -413,7 +450,7 @@ export default class UI {
             if (project.getName() === this.currentProject.getName()) {
                 button.classList.add('current-project');
                 deleteProjectButton.classList.add('fa-regular', 'fa-trash-can');
-                
+
             } else {
                 button.classList.remove('current-project');
                 deleteProjectButton.classList.remove('fa-regular', 'fa-trash-can');
@@ -431,6 +468,7 @@ export default class UI {
                 const projectIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract project index from class
                 const project = this.projects[projectIndex];
                 this.todoList.deleteProject(project);
+                storage.deleteProject(project); // delete the project from local storage
                 this.refreshProjects();
                 this.currentProject = this.projects[0];
                 this.refreshTasks();
@@ -447,8 +485,25 @@ export default class UI {
                 const taskIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract task index from class
                 const task = this.currentProject.getTasks()[taskIndex];
                 this.currentProject.deleteTask(task);
+                storage.deleteTask(this.currentProject, task); // delete the task from local storage
                 this.refreshTasks();
             });
+        });
+    }
+
+    createResetButton() {
+        const resetButton = document.createElement('button');
+        resetButton.classList.add('reset-button');
+        resetButton.innerHTML = "Clear Local Storage";
+
+        return resetButton;
+    }
+
+    resetButtonListener() {
+        const resetButton = document.querySelector('.reset-button');
+        resetButton.addEventListener('click', () => {
+            localStorage.clear();
+            console.log("Local storage cleared");
         });
     }
 }

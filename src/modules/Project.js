@@ -1,3 +1,5 @@
+import Task from "./Task";
+
 export default class Project {
     constructor(name) {
         this.name = name;
