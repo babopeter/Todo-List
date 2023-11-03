@@ -19,7 +19,7 @@ body {
 .page {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 10vh 80vh 10vh;
 }
 
 .title {
