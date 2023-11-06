@@ -269,35 +269,6 @@ export default class UI {
         });
     }
 
-    // Create the default task elements and append them to the task container
-    
-    // createDefaultTasks() {
-    //     const taskContainer = document.createElement('div');
-    //     taskContainer.classList.add('task-container');
-
-    //     // Create a demo daily task
-    //     const task1 = new Task("Meditate", "Every morning for 10 minutes.", "2023-11-01", "Medium");
-    //     // this.projects[0].addTask(task1);
-    //     storage.addTask(this.projects[0], task1); // store the task in local storage
-
-    //     // Create a demo weekly task
-    //     const task2 = new Task("Vacuum", "Clean the whole apartment", "2024-10-28", "High");
-    //     // this.projects[1].addTask(task2);
-    //     storage.addTask(this.projects[1], task2); // store the task in local storage
-
-    //     // Create a demo monthly task
-    //     const task3 = new Task("Todo List", "Finish the application", "2023-11-05", "Low");
-    //     // this.projects[2].addTask(task3);
-    //     storage.addTask(this.projects[2], task3); // store the task in local storage
-
-    //     const taskItem = this.createTaskItem(task1);
-
-    //     taskContainer.appendChild(taskItem);
-    //     taskContainer.appendChild(this.addTaskForm());
-
-    //     return taskContainer;
-    // }
-
     createTasks() {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
