@@ -44,6 +44,7 @@ export default class UI {
         page.appendChild(this.createProjects());
         page.appendChild(this.createTasks());
         page.appendChild(this.createResetButton());
+        page.appendChild(this.createSignature());
         
         document.body.appendChild(page);
     }
@@ -494,5 +495,15 @@ export default class UI {
         resetButton.addEventListener('click', () => {
             this.resetApp();
         });
+    }
+
+    createSignature() {
+        const signature = document.createElement('div');
+        const date = new Date().getFullYear();
+        signature.classList.add('signature');
+        signature.innerHTML = ` Copyright © ` + date + ` Peter Babo ` + `<a href="https://github.com/babopeter" target="_blank">
+        <i class="fa-brands fa-github"></i>`;
+
+        return signature;
     }
 }

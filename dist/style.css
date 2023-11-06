@@ -260,5 +260,28 @@ button:hover {
 }
 
 .reset-button {
-    width: 200px;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.fa-github {
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+}
+  
+.fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+}
+
+.signature {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 10px;
+
 }
