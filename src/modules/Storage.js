@@ -30,7 +30,11 @@ export default class Storage {
 
     deleteProject(project) {
         const todoList = this.loadTodoList();
-        todoList.deleteProject(project);
+        todoList.getProjects().forEach(projectInList => {
+            if (projectInList.getName() === project.getName()) {
+                todoList.deleteProject(projectInList);
+            }
+        });
         this.saveTodoList(todoList);
     }
 
@@ -40,9 +44,15 @@ export default class Storage {
         this.saveTodoList(todoList);
     }
 
-    deleteTask(project, task) {
+    deleteTask(task) {
         const todoList = this.loadTodoList();
-        todoList.getProject(project.getName()).deleteTask(task);
+        todoList.getProjects().forEach(project => {
+            project.getTasks().forEach(taskInProject => {
+                if (taskInProject.getName() === task.getName()) {
+                    project.deleteTask(taskInProject);
+                }
+            });
+        });
         this.saveTodoList(todoList);
     }
 }

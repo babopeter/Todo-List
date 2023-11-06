@@ -485,7 +485,9 @@ export default class UI {
                 const taskIndex = parseInt(button.parentElement.classList[1].split('-')[2]); // Extract task index from class
                 const task = this.currentProject.getTasks()[taskIndex];
                 this.currentProject.deleteTask(task);
-                storage.deleteTask(this.currentProject, task); // delete the task from local storage
+                storage.deleteTask(task);
+                console.log(this.todoList);
+                console.log(storage.loadTodoList());      
                 this.refreshTasks();
             });
         });
