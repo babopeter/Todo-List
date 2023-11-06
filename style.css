@@ -19,7 +19,7 @@ body {
 .page {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-rows: 10vh 85vh 5vh;
 }
 
 .title {
@@ -256,4 +256,8 @@ button {
 button:hover {
     cursor: pointer;
     background-color: var(--darkestblue);
+}
+
+.reset-button {
+    width: 200px;
 }
