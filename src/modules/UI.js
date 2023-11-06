@@ -476,16 +476,23 @@ export default class UI {
     createResetButton() {
         const resetButton = document.createElement('button');
         resetButton.classList.add('reset-button');
-        resetButton.innerHTML = "Clear Local Storage";
+        resetButton.innerHTML = "Reset Application";
 
         return resetButton;
+    }
+
+    resetApp() {
+        if(!confirm("Are you sure you want to reset the application? \nThis will delete all your projects and tasks.")) {
+            return;
+        }
+        localStorage.clear();
+        location.reload();
     }
 
     resetButtonListener() {
         const resetButton = document.querySelector('.reset-button');
         resetButton.addEventListener('click', () => {
-            localStorage.clear();
-            console.log("Local storage cleared");
+            this.resetApp();
         });
     }
 }
