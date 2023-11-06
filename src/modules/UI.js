@@ -170,6 +170,12 @@ export default class UI {
 
 
             this.refreshProjects();
+
+            if(this.projects.length === 1) {
+                this.currentProject = project;
+                this.switchProject(this.currentProject);
+            }
+
             console.log(this.projects);
         });
 
@@ -274,10 +280,13 @@ export default class UI {
         taskContainer.classList.add('task-container');
 
         // create a task item for each task in the existing projects
-        this.currentProject.getTasks().forEach((task) => {
-            const taskItem = this.createTaskItem(task);
-            taskContainer.appendChild(taskItem);
-        });
+        // if there are no projects, do nothing
+        if(this.todoList.getProjects().length > 0) {
+            this.currentProject.getTasks().forEach((task) => {
+                const taskItem = this.createTaskItem(task);
+                taskContainer.appendChild(taskItem);
+            });
+        }
 
         taskContainer.appendChild(this.addTaskForm());
 
@@ -398,7 +407,7 @@ export default class UI {
     refreshTasks() {
         const taskContainer = document.querySelector('.task-container');
         taskContainer.innerHTML = "";
-
+        
         this.currentProject.getTasks().forEach((task) => {
             const taskItem = this.createTaskItem(task);
             taskContainer.appendChild(taskItem);
